@@ -6,4 +6,9 @@ body {
   font-family: "寰蒋闆呴粦", "瀹嬩綋", sans-serif;
   color: #231f20;
   overflow: auto;
+  height: 100vh;
+}
+
+#app {
+  height: inherit;
 }

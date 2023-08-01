@@ -4,8 +4,18 @@ import LoveTree from "./components/LoveTree/index.vue"
 </script>
 
 <template>
-  <!-- <PoetryForYou></PoetryForYou> -->
-  <LoveTree></LoveTree>
+  <div class="app">
+    <!-- <PoetryForYou></PoetryForYou> -->
+    <LoveTree></LoveTree>
+  </div>
 </template>
 
-<style></style>
+<style>
+.app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+}
+</style>

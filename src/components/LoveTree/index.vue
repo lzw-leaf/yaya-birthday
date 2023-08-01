@@ -1,12 +1,14 @@
 <template>
-  <canvas
-    class="love-tree"
-    id="canvas"
-    :width="width"
-    :height="height"
-    @click="onStartAnimateClick"
-    @mousemove="onMousemoveSeed"
-  ></canvas>
+  <div id="loveTree">
+    <canvas
+      class="love-tree"
+      id="canvas"
+      :width="width"
+      :height="height"
+      @click="onStartAnimateClick"
+      @mousemove="onMousemoveSeed"
+    ></canvas>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,8 +16,9 @@ import { onMounted, ref } from "vue"
 import { Tree } from "./lib/Tree"
 import { Seed } from "./lib/Seed"
 import { Footer } from "./lib/Footer"
-const width = 1100
-const height = 680
+const multiple = 1.2
+const width = 1100 * multiple
+const height = 680 * multiple
 const opts = {
   seed: {
     x: width / 2 - 20,
@@ -24,75 +27,135 @@ const opts = {
   },
   branch: [
     [
-      535,
-      680,
-      570,
-      250,
-      500,
-      200,
-      30,
-      100,
+      535 * multiple,
+      680 * multiple,
+      570 * multiple,
+      250 * multiple,
+      500 * multiple,
+      200 * multiple,
+      30 * multiple,
+      100 * multiple,
       [
         [
-          540,
-          500,
-          455,
-          417,
-          340,
-          400,
-          13,
-          100,
-          [[450, 435, 434, 430, 394, 395, 2, 40]]
-        ],
-        [
-          550,
-          445,
-          600,
-          356,
-          680,
-          345,
-          12,
-          100,
-          [[578, 400, 648, 409, 661, 426, 3, 80]]
-        ],
-        [539, 281, 537, 248, 534, 217, 3, 40],
-        [
-          546,
-          397,
-          413,
-          247,
-          328,
-          244,
-          9,
-          80,
+          540 * multiple,
+          500 * multiple,
+          455 * multiple,
+          417 * multiple,
+          340 * multiple,
+          400 * multiple,
+          13 * multiple,
+          100 * multiple,
           [
-            [427, 286, 383, 253, 371, 205, 2, 40],
-            [498, 345, 435, 315, 395, 330, 4, 60]
+            [
+              450 * multiple,
+              435 * multiple,
+              434 * multiple,
+              430 * multiple,
+              394 * multiple,
+              395 * multiple,
+              2 * multiple,
+              40 * multiple
+            ]
           ]
         ],
         [
-          546,
-          357,
-          608,
-          252,
-          678,
-          221,
-          6,
-          100,
-          [[590, 293, 646, 277, 648, 271, 2, 80]]
+          550 * multiple,
+          445 * multiple,
+          600 * multiple,
+          356 * multiple,
+          680 * multiple,
+          345 * multiple,
+          12 * multiple,
+          100 * multiple,
+          [
+            [
+              578 * multiple,
+              400 * multiple,
+              648 * multiple,
+              409 * multiple,
+              661 * multiple,
+              426 * multiple,
+              3 * multiple,
+              80 * multiple
+            ]
+          ]
+        ],
+        [
+          539 * multiple,
+          281 * multiple,
+          537 * multiple,
+          248 * multiple,
+          534 * multiple,
+          217 * multiple,
+          3 * multiple,
+          40 * multiple
+        ],
+        [
+          546 * multiple,
+          397 * multiple,
+          413 * multiple,
+          247 * multiple,
+          328 * multiple,
+          244 * multiple,
+          9 * multiple,
+          80 * multiple,
+          [
+            [
+              427 * multiple,
+              286 * multiple,
+              383 * multiple,
+              253 * multiple,
+              371 * multiple,
+              205 * multiple,
+              2 * multiple,
+              40 * multiple
+            ],
+            [
+              498 * multiple,
+              345 * multiple,
+              435 * multiple,
+              315 * multiple,
+              395 * multiple,
+              330 * multiple,
+              4 * multiple,
+              60 * multiple
+            ]
+          ]
+        ],
+        [
+          546 * multiple,
+          357 * multiple,
+          608 * multiple,
+          252 * multiple,
+          678 * multiple,
+          221 * multiple,
+          6 * multiple,
+          100 * multiple,
+          [
+            [
+              590 * multiple,
+              293 * multiple,
+              646 * multiple,
+              277 * multiple,
+              648 * multiple,
+              271 * multiple,
+              2 * multiple,
+              80 * multiple
+            ]
+          ]
         ]
       ]
     ]
   ],
   bloom: {
-    num: 700,
-    width: 1080,
-    height: 650
+    num: 700 * multiple,
+    width: 1080 * multiple,
+    height: 650 * multiple
   },
   footer: {
-    width: 1200,
-    height: 5,
-    speed: 10
+    width: 1200 * multiple,
+    height: 5 * multiple,
+    speed: 10 * multiple
   }
 }
 let canvas = null as unknown as HTMLCanvasElement
@@ -100,7 +163,6 @@ let tree = null as unknown as Tree
 let seed = null as unknown as Seed
 let foot = null as unknown as Footer
 const clickFlag = ref(false)
-const hold = ref(1)
 
 // 点击爱心开始播放动画
 const onStartAnimateClick = (e: MouseEvent) => {
@@ -163,25 +225,29 @@ const flowAnimate = async () => {
 }
 
 const moveAnimate = async () => {
-  tree.snapshot("p1", 240, 0, 610, 680)
-  while (tree.move("p1", 500, 0)) {
+  tree.snapshot("p1", 240 * multiple, 0, 610 * multiple, 680 * multiple)
+  while (tree.move("p1", 500 * multiple, 0)) {
     foot.draw()
     await new Promise(reslove => {
       setTimeout(() => reslove(""), 10)
     })
   }
   foot.draw()
-  tree.snapshot("p2", 500, 0, 610, 680)
+  tree.snapshot(
+    "p2",
+    500 * multiple,
+    0 * multiple,
+    610 * multiple,
+    680 * multiple
+  )
 
   // 会有闪烁不得意这样做, (＞﹏＜)
-  // canvas
-  //   .parent()
-  //   .css("background", "url(" + tree.toDataURL("image/png") + ")")
-  // canvas.css("background", "#ffe")
+  const loveTreeEl = document.getElementById("loveTree")!
+  loveTreeEl.style.background = `url(${tree.toDataURL("image/png")})`
+
   await new Promise(reslove => {
     setTimeout(() => reslove(""), 300)
   })
-  // canvas.css("background", "none")
 }
 
 const jumpAnimate = async () => {
