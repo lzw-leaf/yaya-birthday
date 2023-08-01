@@ -25,6 +25,8 @@ export class Tree {
     opt: Record<string, any>
   ) {
     this.canvas = canvas
+    console.log("canvas", canvas)
+
     this.ctx = canvas.getContext("2d")
     this.width = width
     this.height = height
@@ -100,7 +102,7 @@ export class Tree {
     this.branchs.push(branch)
   }
 
-  addBranchs(branchs: Branch[]) {
+  addBranchs(branchs: any[]) {
     const tree = this
     var b, p1, p2, p3, r, l, c
     for (let i = 0; i < branchs.length; i++) {
