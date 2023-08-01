@@ -10,7 +10,7 @@ import { onMounted, ref } from "vue"
 
 interface EPTypeWriterProps {
   text: string
-  typeSpeed: number
+  typeSpeed?: number
 }
 
 const props = withDefaults(defineProps<EPTypeWriterProps>(), {
