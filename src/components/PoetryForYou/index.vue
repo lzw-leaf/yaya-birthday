@@ -1,15 +1,18 @@
 <template>
-  <template v-for="(poetry, index) of poetryList">
-    <Transition name="fade" mode="out-in">
-      <PoetryBoard
-        v-if="index === currentIndex && isTransition"
-        :key="index"
-        :textList="poetry"
-        @typed="onTyped"
-      >
-      </PoetryBoard>
-    </Transition>
-  </template>
+  <div class="poetry">
+    <div class="poetry__title">你</div>
+    <template v-for="(poetry, index) of poetryList">
+      <Transition name="fade" mode="out-in">
+        <PoetryBoard
+          v-if="index === currentIndex && isTransition"
+          :key="index"
+          :textList="poetry"
+          @typed="onTyped"
+        >
+        </PoetryBoard>
+      </Transition>
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -18,11 +21,14 @@ import PoetryBoard from "./PoetryBoard.vue"
 const currentIndex = ref(0)
 const isTransition = ref(true)
 const onTyped = () => {
+  if (currentIndex.value >= poetryList.value.length - 1) return
   isTransition.value = false
   setTimeout(() => {
     isTransition.value = true
   }, 500)
+
   currentIndex.value++
+
   console.log("触发事件")
 }
 
@@ -48,5 +54,18 @@ onMounted(() => {})
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.poetry {
+  line-height: 2;
+  width: 400px;
+  font-size: 16px;
+  color: rgb(255, 136, 136);
+  .poetry__title {
+    font-size: 30px;
+    font-weight: 600;
+    color: rgb(255, 85, 85);
+    margin-bottom: 50px;
+  }
 }
 </style>

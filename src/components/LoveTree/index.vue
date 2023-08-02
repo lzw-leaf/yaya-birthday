@@ -1,5 +1,6 @@
 <template>
   <div id="loveTree">
+    <audio id="audio" autoplay :src="loveMp3"></audio>
     <canvas
       class="love-tree"
       id="canvas"
@@ -7,7 +8,9 @@
       :height="height"
       @click="onStartAnimateClick"
       @mousemove="onMousemoveSeed"
-    ></canvas>
+    >
+    </canvas>
+    <PoetryForYou v-if="poetryStart" class="love-poetry"></PoetryForYou>
   </div>
 </template>
 
@@ -16,6 +19,8 @@ import { onMounted, ref } from "vue"
 import { Tree } from "./lib/Tree"
 import { Seed } from "./lib/Seed"
 import { Footer } from "./lib/Footer"
+import PoetryForYou from "../PoetryForYou/index.vue"
+import loveMp3 from "../../music/love.mp3"
 const multiple = 1.2
 const width = 1100 * multiple
 const height = 680 * multiple
@@ -162,24 +167,30 @@ let canvas = null as unknown as HTMLCanvasElement
 let tree = null as unknown as Tree
 let seed = null as unknown as Seed
 let foot = null as unknown as Footer
+
 const clickFlag = ref(false)
+const poetryStart = ref(false)
 
 // 点击爱心开始播放动画
 const onStartAnimateClick = (e: MouseEvent) => {
   if (clickFlag.value) return
-  const x = e.pageX - canvas.offsetLeft
-  const y = e.pageY - canvas.offsetTop
+  const x = e.offsetX - canvas.offsetLeft
+  const y = e.offsetY - canvas.offsetTop
   if (seed.hover(x, y)) {
     clickFlag.value = true
     canvas.classList.remove("hand")
+    const audioEl = document.getElementById("audio") as HTMLAudioElement
+    audioEl.load()
+    console.log([audioEl])
+
     runAnimation()
   }
 }
 
 const onMousemoveSeed = (e: MouseEvent) => {
   if (clickFlag.value) return
-  const x = e.pageX - canvas.offsetLeft
-  const y = e.pageY - canvas.offsetTop
+  const x = e.offsetX - canvas.offsetLeft
+  const y = e.offsetY - canvas.offsetTop
   seed.hover(x, y)
     ? canvas.classList.add("hand")
     : canvas.classList.remove("hand")
@@ -267,6 +278,7 @@ const runAnimation = async () => {
   await flowAnimate()
   await moveAnimate()
   console.log("开始文字答应")
+  poetryStart.value = true
   await jumpAnimate()
 }
 
@@ -284,9 +296,19 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.love-tree {
-  &.hand {
-    cursor: pointer;
+#loveTree {
+  position: relative;
+
+  .love-tree {
+    &.hand {
+      cursor: pointer;
+    }
+  }
+  .love-poetry {
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    z-index: -1;
   }
 }
 </style>
