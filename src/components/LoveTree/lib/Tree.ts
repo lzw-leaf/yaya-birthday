@@ -67,12 +67,14 @@ export class Tree {
 
   initBloom() {
     const bloom = this.opt.bloom || {}
+
     const cache = []
     const num = bloom.num || 500
     const width = bloom.width || this.width
     const height = bloom.height || this.height
     const figure = this.seed!.heart.figure
-    const r = 240
+    const r = bloom.radius
+    console.log("初始开花", num, width, height)
     for (let i = 0; i < num; i++) {
       cache.push(this.createBloom(width, height, r, figure))
     }
@@ -165,6 +167,7 @@ export class Tree {
     speed?: number
   ) {
     let x, y
+    console.log("创建花朵", width, height)
     while (true) {
       x = random(20, width - 20)
       y = random(20, height - 20)
@@ -252,7 +255,7 @@ export class Tree {
         width = bloom.width || this.width,
         height = bloom.height || this.height,
         figure = this.seed!.heart.figure
-      const r = 240
+      const r = bloom.radius
 
       for (let i = 0; i < random(1, 2); i++) {
         blooms.push(
@@ -265,7 +268,7 @@ export class Tree {
             1,
             undefined,
             1,
-            new Point(random(-100, 600), 720),
+            new Point(random(-100, 600), this.height - 20),
             random(200, 300)
           )
         )

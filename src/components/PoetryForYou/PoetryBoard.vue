@@ -2,7 +2,7 @@
   <div>
     <template v-for="(poetry, index) of textList">
       <EPTypeWriter
-        v-if="currentIndex >= index"
+        v-if="currentIndex >= index || isPlayOver"
         :key="poetry[0] + index"
         :text="poetry"
         @typed="onTyped"
@@ -13,12 +13,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { inject, onMounted, ref } from "vue"
 import EPTypeWriter from "./EPTypeWriter.vue"
 interface PoetryBoardProps {
   textList: string[]
 }
-
+const isPlayOver = inject("isPlayOver")
 const props = withDefaults(defineProps<PoetryBoardProps>(), {
   textList: () => [""]
 })

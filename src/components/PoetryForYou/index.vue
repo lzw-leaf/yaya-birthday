@@ -4,7 +4,8 @@
     <template v-for="(poetry, index) of poetryList">
       <Transition name="fade" mode="out-in">
         <PoetryBoard
-          v-if="index === currentIndex && isTransition"
+          class="poetry-board"
+          v-if="index <= currentIndex"
           :key="index"
           :textList="poetry"
           @typed="onTyped"
@@ -16,12 +17,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { onMounted, provide, ref } from "vue"
 import PoetryBoard from "./PoetryBoard.vue"
+
 const currentIndex = ref(0)
 const isTransition = ref(true)
+const isPlayOver = ref(false)
+provide("isPlayOver", isPlayOver)
 const onTyped = () => {
-  if (currentIndex.value >= poetryList.value.length - 1) return
+  if (currentIndex.value >= poetryList.value.length - 1)
+    return (isPlayOver.value = true)
   isTransition.value = false
   setTimeout(() => {
     isTransition.value = true
@@ -65,7 +70,10 @@ onMounted(() => {})
     font-size: 30px;
     font-weight: 600;
     color: rgb(255, 85, 85);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+  }
+  .poetry-board {
+    margin-top: 20px;
   }
 }
 </style>

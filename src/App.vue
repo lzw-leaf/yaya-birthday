@@ -15,14 +15,5 @@ import LoveTree from "./components/LoveTree/index.vue"
   justify-content: center;
   position: relative;
   height: 100%;
-  .app__body {
-    position: relative;
-    .body__poetry {
-      position: absolute;
-      top: 30%;
-      left: 30%;
-      line-height: 1.5;
-    }
-  }
 }
 </style>

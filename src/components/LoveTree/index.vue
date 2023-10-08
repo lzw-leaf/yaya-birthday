@@ -21,7 +21,7 @@ import { Seed } from "./lib/Seed"
 import { Footer } from "./lib/Footer"
 import PoetryForYou from "../PoetryForYou/index.vue"
 import loveMp3 from "../../music/love.mp3"
-const multiple = 1.2
+const multiple = 1.5
 const width = 1100 * multiple
 const height = 680 * multiple
 const opts = {
@@ -155,7 +155,8 @@ const opts = {
   bloom: {
     num: 700 * multiple,
     width: 1080 * multiple,
-    height: 650 * multiple
+    height: 650 * multiple,
+    radius: 240 * multiple
   },
   footer: {
     width: 1200 * multiple,
@@ -202,7 +203,7 @@ const seedAnimate = async () => {
   while (seed.canScale()) {
     seed.scale(0.95)
     await new Promise(reslove => {
-      setTimeout(() => reslove(console.log("触发落地")), 10)
+      setTimeout(() => reslove(console.log("正在落地")), 10)
     })
   }
   console.log("地面展开")
@@ -226,13 +227,17 @@ const growAnimate = async () => {
   } while (tree.canGrow())
 }
 
+/** 开花 */
 const flowAnimate = async () => {
   do {
     tree.flower(2)
+    console.log("开花~~~~~")
+
     await new Promise(reslove => {
       setTimeout(() => reslove(""), 10)
     })
   } while (tree.canFlower())
+  console.log("变成爱心了！")
 }
 
 const moveAnimate = async () => {
@@ -306,7 +311,7 @@ onMounted(() => {
   }
   .love-poetry {
     position: absolute;
-    top: 15%;
+    top: 50px;
     left: 10%;
     z-index: -1;
   }

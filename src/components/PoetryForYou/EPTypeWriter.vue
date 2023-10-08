@@ -1,12 +1,12 @@
 <template>
   <div class="is-typed">
-    <span class="typed">{{ writedStr }}</span>
-    <span :class="{ cursor: !isWriteCompleted }">&nbsp;</span>
+    <span class="typed">{{ isPlayOver ? text : writedStr }}</span>
+    <span :class="{ cursor: !isWriteCompleted && !isPlayOver }">&nbsp;</span>
   </div>
 </template>
 
 <script setup lang="ts" name="EPTypeWriter">
-import { onMounted, ref } from "vue"
+import { inject, onMounted, ref } from "vue"
 
 interface EPTypeWriterProps {
   text: string
@@ -18,6 +18,8 @@ const props = withDefaults(defineProps<EPTypeWriterProps>(), {
   typeSpeed: 200
 })
 const emits = defineEmits(["typed"])
+
+const isPlayOver = inject("isPlayOver")
 
 const charIndex = ref(0)
 const writedStr = ref("")
